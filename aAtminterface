@@ -1,0 +1,84 @@
+package ATMinterface;
+import java.util.*; 
+
+public class AtmInterface {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc=new Scanner(System.in);
+		int User_id[]= {2025,2035,1432,1576,1432};
+		int pin[]= {2025,2035,1432,1576,1432};
+		String[] trans_History=new String[pin.length];
+		int amount,choice,atm_money=50000,user_name,password;
+		String transation=" ";
+		System.out.println("Enter your user name");
+		user_name=sc.nextInt();
+		System.out.println("Enter your password");
+		password=sc.nextInt();
+		for(int i=0;i<pin.length;i++)
+		{
+			if(User_id[i]==user_name && pin[i]==password)
+			{
+				do
+				{
+					System.out.println("1.Transactions History 2.Withdraw 3.Deposit 4.Transfer 5.Quit");
+					choice=sc.nextInt();
+					switch(choice)
+					{
+					case 1:
+						System.out.println("Transaction History");
+						System.out.println(trans_History[i]);
+						break;
+					case 2:
+						System.out.println("Enter your amount to withdraw");
+						amount=sc.nextInt();
+						if(amount%100!=0)
+							System.out.println("Enter amount in maultiples of 100");
+						else if(amount>atm_money)
+							System.out.println("not available in atm");
+						else
+						{
+							atm_money-=amount;
+							System.out.println("Collect your cash");
+							Date d1=new Date();
+							transation=transation+d1+"withdraw"+"amount"+"  ";
+							trans_History[i]=transation;
+						}
+						break;
+					case 3:
+						System.out.println("Enter amount to deposit");
+						amount=sc.nextInt();
+						if(amount%100!=0)
+							System.out.println("Enter multiples of 100");
+						else
+						{
+							System.out.println("Deposited sussesfully");
+							atm_money+=amount;
+							Date d1=new Date();
+							transation=transation+d1+"Deposit"+"amount"+"  ";
+							trans_History[i]=transation;
+						}
+						break;
+					case 4:
+						System.out.println("Enter pin of tranfer");
+						password=sc.nextInt();
+						System.out.println("Tranfered successfully");
+						Date d1=new Date();
+						transation=transation+d1+"transfer"+"amount"+"password"+"  ";
+						trans_History[i]=transation;
+						break;
+					}
+				}while(choice!=5);
+
+			}
+			else if(i==pin.length-1 && password!=pin[i])
+			{
+				System.out.println("You have entered wrong pin");
+				break;
+			}
+		}
+		sc.close();
+	}
+
+
+}
